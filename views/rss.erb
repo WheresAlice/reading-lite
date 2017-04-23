@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title><%= user %>'s Reading Posts</title>
+    <description>All of the great stuff that <%= user %> is reading!</description>
+    <link><%= request.scheme %>://<%= request.host %>/<%= user %></link>
+    <atom:link href="http://<%= request.host %>/<%= user %>" rel="self" type="application/rss+xml"/>
+<% items.each do |i| %>
+        <item>
+          <title><%= i.title.split('is reading ')[1].split(' because of ')[0].chomp('"').reverse.chomp('"').reverse %></title>
+          <link><%= i.link.split('/')[5..-1].join('/') %></link>
+          <guid><%= i.link.split('/')[5..-1].join('/') %></guid>
+          <description>
+            <![CDATA[ Currently reading <a href="<%= i.link.split('/')[5..-1].join('/') %>"><%= i.title.split('is reading ')[1].split(' because of ')[0].chomp('"').reverse.chomp('"').reverse %></a>
+            ]]>
+          </description>
+          <pubDate><%= i.pubDate %></pubDate>
+        </item>
+    <% end %>
